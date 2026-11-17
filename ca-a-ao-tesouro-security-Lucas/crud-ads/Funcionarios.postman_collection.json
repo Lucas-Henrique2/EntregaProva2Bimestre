@@ -1,0 +1,68 @@
+{
+  "info": {
+    "name": "Funcionarios - Spring Security",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:8080/api/funcionarios" },
+    { "key": "id", "value": "1" }
+  ],
+  "item": [
+    {
+      "name": "1 - POST criar (liberado) -> 201",
+      "request": {
+        "auth": { "type": "noauth" },
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": { "mode": "raw", "raw": "{\n  \"nome\": \"Ana\",\n  \"cpf\": \"111.111.111-11\",\n  \"rua\": \"Rua A\"\n}" },
+        "url": "{{baseUrl}}"
+      }
+    },
+    {
+      "name": "2 - GET listar (liberado) -> 200",
+      "request": { "auth": { "type": "noauth" }, "method": "GET", "url": "{{baseUrl}}" }
+    },
+    {
+      "name": "3 - GET por id (liberado) -> 200",
+      "request": { "auth": { "type": "noauth" }, "method": "GET", "url": "{{baseUrl}}/{{id}}" }
+    },
+    {
+      "name": "4 - PUT sem auth -> 401",
+      "request": {
+        "auth": { "type": "noauth" },
+        "method": "PUT",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": { "mode": "raw", "raw": "{\n  \"nome\": \"Ana Maria\",\n  \"cpf\": \"222.222.222-22\",\n  \"rua\": \"Rua B\"\n}" },
+        "url": "{{baseUrl}}/{{id}}"
+      }
+    },
+    {
+      "name": "5 - PUT com Basic Auth -> 200",
+      "request": {
+        "auth": { "type": "basic", "basic": [
+          { "key": "username", "value": "admin", "type": "string" },
+          { "key": "password", "value": "admin123", "type": "string" }
+        ] },
+        "method": "PUT",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": { "mode": "raw", "raw": "{\n  \"nome\": \"Ana Maria\",\n  \"cpf\": \"222.222.222-22\",\n  \"rua\": \"Rua B\"\n}" },
+        "url": "{{baseUrl}}/{{id}}"
+      }
+    },
+    {
+      "name": "6 - DELETE sem auth -> 401",
+      "request": { "auth": { "type": "noauth" }, "method": "DELETE", "url": "{{baseUrl}}/{{id}}" }
+    },
+    {
+      "name": "7 - DELETE com Basic Auth -> 204",
+      "request": {
+        "auth": { "type": "basic", "basic": [
+          { "key": "username", "value": "admin", "type": "string" },
+          { "key": "password", "value": "admin123", "type": "string" }
+        ] },
+        "method": "DELETE",
+        "url": "{{baseUrl}}/{{id}}"
+      }
+    }
+  ]
+}
